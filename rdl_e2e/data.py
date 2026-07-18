@@ -1,5 +1,6 @@
 from __future__ import annotations
 import importlib
+import importlib.util
 from dataclasses import dataclass
 from typing import Literal
 import numpy as np
@@ -39,9 +40,19 @@ class RelationalDatabase:
             get_dataset = importlib.import_module("relbench.datasets").get_dataset
             get_task = importlib.import_module("relbench.tasks").get_task
         except ImportError as e:
+            if importlib.util.find_spec("relbench") is None:
+                raise ImportError(
+                    "relbench is not installed. Run `pip install relbench pytorch_frame` "
+                    "on a machine with network access, then retry."
+                ) from e
+            if importlib.util.find_spec("torch_frame") is None:
+                raise ImportError(
+                    "pytorch_frame is not installed in this Python environment. "
+                    "Run `pip install pytorch_frame` in the same interpreter/kernel, then retry."
+                ) from e
             raise ImportError(
-                "relbench is not installed. Run `pip install relbench pytorch_frame` "
-                "on a machine with network access, then retry."
+                "Failed to import relbench dependencies. "
+                f"Original import error: {type(e).__name__}: {e}"
             ) from e
 
         dataset = get_dataset(dataset_name, download=True)
