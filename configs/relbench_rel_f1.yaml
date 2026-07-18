@@ -1,0 +1,24 @@
+# Real RelBench task: Formula 1 driver-DNF prediction. Chosen as the first
+# real-data config because it's one of RelBench's smallest databases, so
+# iteration is fast. Requires `pip install relbench pytorch_frame` and
+# network access to relbench.stanford.edu (downloads + caches on first run).
+seed: 42
+
+dataset:
+  source: relbench
+  name: rel-f1
+  task: driver-dnf
+
+model:
+  text_model_name: distilbert-base-uncased
+  hidden_dim: 64
+  n_gnn_layers: 2
+  max_text_len: 32
+
+train:
+  epochs: 60
+  lr: 0.001
+  weight_decay: 0.0001
+  patience: 8
+  scheduler_patience: 4
+  scheduler_factor: 0.5

@@ -1,0 +1,25 @@
+# Real RelBench task: Avito ad click-through-rate prediction. Included
+# specifically because its ads table has free-text columns, which is the
+# case this whole project's comparison (frozen vs. trainable text encoder)
+# is actually about -- rel-f1 has almost no text, so it's a weaker test of
+# the extension even though it's a good smoke test for the pipeline itself.
+seed: 42
+
+dataset:
+  source: relbench
+  name: rel-avito
+  task: ad-ctr
+
+model:
+  text_model_name: distilbert-base-uncased
+  hidden_dim: 64
+  n_gnn_layers: 2
+  max_text_len: 32
+
+train:
+  epochs: 60
+  lr: 0.001
+  weight_decay: 0.0001
+  patience: 8
+  scheduler_patience: 4
+  scheduler_factor: 0.5
