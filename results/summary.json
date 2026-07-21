@@ -1,0 +1,10 @@
+{
+  "dataset": "rel-f1/driver-dnf",
+  "using_synthetic_data": false,
+  "num_entities": 857,
+  "num_tables": 9,
+  "best_method": "Tabular Logistic Regression",
+  "best_roc_auc": 0.8323789692868299,
+  "best_f1": 0.944206008583691,
+  "num_methods_compared": 4
+}
